@@ -7,8 +7,6 @@
       dest: "{{ nexus_base_dir }}/nexus/etc/jetty/jetty-https.xml"
     - src: templates/nexus.vmoptions.j2
       dest: "{{ nexus_base_dir }}/nexus/bin/nexus.vmoptions"
-    - src: templates/nexus.service.j2
-      dest: "/etc/systemd/system/nexus.service"
   notify: nexus_restart
   ansible.builtin.template:
     src: "{{ item.src }}"
@@ -16,6 +14,16 @@
     owner: "{{ nexus_user }}"
     group: "{{ nexus_user }}"
     backup: true
+
+- name: Ensure systemd unit file is configured
+  notify: 
+    - daemon_reload
+    - nexus_restart
+  ansible.builtin.template:
+    src: templates/nexus.service.j2
+    dest: /etc/systemd/system/nexus.service
+    owner: root
+    group: root
 
 - name: Setup certs
   when: setup_certs | bool
