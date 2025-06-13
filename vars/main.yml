@@ -12,3 +12,50 @@ offline: true
 nexus_base_dir: /opt/sonatype
 
 nexus_user: nexus
+
+## Should be changed under 'host_vars/host.yml'
+instance_name: nexus
+
+## Ports
+application_port: 8080
+application_port_ssl: 8443
+
+## JVM Options
+nexus_jvm_xms_mbytes: 3072
+nexus_jvm_xmx_mbytes: 3072
+
+## SSL Cert stuff
+setup_certs: true
+self_signed: true
+private_key_bits: 4096
+private_key_path: "{{ nexus_base_dir }}/nexus/etc/ssl/{{ instance_name }}.key"
+public_key_path: "{{ nexus_base_dir }}/nexus/etc/ssl/{{ instance_name }}.pub"
+csr_path: "{{ nexus_base_dir }}/nexus/etc/ssl/{{ instance_name }}.csr"
+cert_path: "{{ nexus_base_dir }}/nexus/etc/ssl/{{ instance_name }}.crt"
+cert_common_name: "{{ instance_name }}"
+cert_digest: sha256
+cert_country: EG
+cert_state: Cairo
+cert_locality: New Cairo
+cert_organization: "Gebz Local Lab"
+cert_ou: "Nexusmanagers"
+cert_email: "nexusmanager@gebz.local"
+cert_dns_sans:
+  - nexus.gebz.local
+  - maven.gebz.local
+cert_ip_sans:
+  - 192.168.1.20
+  - 192.168.100.20
+
+## Java Keystore Stuff
+setup_keystore: true
+generate_keystore: true
+keystore_path: "{{ nexus_base_dir }}/nexus/etc/ssl/keystore.jks"
+keystore_password: changeme
+trust_store_password: changeme
+
+## When importing cert stuff instead of generating them
+cert_import_path_privkey: ""
+cert_import_path_pubkey: ""
+cert_import_path_crt: ""
+keystore_import_path: ""

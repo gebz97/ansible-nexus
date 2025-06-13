@@ -1,5 +1,0 @@
----
-- name: nexus_restart
-  ansible.builtin.service:
-    name: nexus
-    state: restarted

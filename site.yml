@@ -7,4 +7,5 @@
     - vars/main.yml
   
   roles:
-    - role: roles/gebz97.nexus-pre-install
+    #- role: roles/gebz97.nexus-pre-install
+    - role: roles/gebz97.nexus-install

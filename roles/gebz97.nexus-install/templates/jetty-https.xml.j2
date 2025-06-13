@@ -12,7 +12,7 @@
     <Set name="KeyStorePath">
       <Call name="resolvePath" class="org.eclipse.jetty.xml.XmlConfiguration">
         <Arg><Property name="ssl.etc"/></Arg>
-        <Arg><Property name="jetty.sslContext.keyStorePath" default="keystore.jks" /></Arg>
+        <Arg><Property name="jetty.sslContext.keyStorePath" default="{{ keystore_path }}" /></Arg>
       </Call>
     </Set>
     <Set name="KeyStorePassword">{{ keystore_password }}</Set>
@@ -22,7 +22,7 @@
     <Set name="TrustStorePath">
       <Call name="resolvePath" class="org.eclipse.jetty.xml.XmlConfiguration">
         <Arg><Property name="ssl.etc"/></Arg>
-        <Arg><Property name="jetty.sslContext.keyStorePath" default="keystore.jks" /></Arg>
+        <Arg><Property name="jetty.sslContext.keyStorePath" default="{{ keystore_path }}" /></Arg>
       </Call>
     </Set>
     <Set name="TrustStorePassword" property="jetty.sslContext.trustStorePassword">{{ trust_store_password }}</Set>

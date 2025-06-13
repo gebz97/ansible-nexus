@@ -1,2 +1,29 @@
 ---
-# tasks file for gebz97.nexus-install
+- name: Ensure config files are correct
+  loop:
+    - src: templates/nexus.properties.j2
+      dest: "{{ nexus_base_dir }}/nexus/etc/nexus-default.properties"
+    - src: templates/jetty-https.xml.j2
+      dest: "{{ nexus_base_dir }}/nexus/etc/jetty/jetty-https.xml"
+    - src: templates/nexus.vmoptions.j2
+      dest: "{{ nexus_base_dir }}/nexus/bin/nexus.vmoptions"
+    - src: templates/nexus.service.j2
+      dest: "/etc/systemd/system/nexus.service"
+  notify: nexus_restart
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ nexus_user }}"
+    group: "{{ nexus_user }}"
+    backup: true
+
+- name: Setup certs
+  when: setup_certs | bool
+  ansible.builtin.include_tasks:
+    file: cert_setup.yml
+
+- name: Ensure nexus service is started and enabled
+  ansible.builtin.service:
+    name: nexus
+    state: started
+    enabled: true

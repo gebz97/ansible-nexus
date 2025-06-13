@@ -1,0 +1,28 @@
+- name: Generating Self-Signed SSL Certs
+  when:
+    - self_signed | bool
+  ansible.builtin.include_tasks:
+    file: self_signed.yml
+
+- name: Import SSL Certs
+  when: not self_signed | bool
+  loop:
+    - src: "{{ cert_import_path_privkey }}"
+      dest: "{{ private_key_path }}"
+    - src: "{{ cert_import_path_pubkey }}"
+      dest: "{{ public_key_path }}"
+    - src: "{{ cert_import_path_crt }}"
+      dest: "{{ cert_path }}"
+  notify: nexus_restart
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ nexus_user }}"
+    group: "{{ nexus_user }}"
+    mode: 0600
+
+- name: Import certificates into keystore
+  when:
+    - setup_keystore | bool
+  ansible.builtin.include_tasks:
+    file: keystore.yml

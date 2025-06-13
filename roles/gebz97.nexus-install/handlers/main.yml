@@ -1,2 +1,5 @@
 ---
-# handlers file for gebz97.nexus-install
+- name: nexus_restart
+  ansible.builtin.service:
+    name: nexus
+    state: restarted

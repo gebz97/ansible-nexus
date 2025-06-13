@@ -1,2 +1,51 @@
 ---
-# defaults file for gebz97.nexus-install
+## Should be changed under 'host_vars/host.yml'
+instance_name: nexus
+
+## Root working directory
+nexus_base_dir: /opt/sonatype
+
+## Ports
+application_port: 8080
+application_port_ssl: 8443
+
+## JVM Options
+nexus_jvm_xms_mbytes: 8192
+nexus_jvm_xmx_mbytes: 8192
+
+## SSL Cert stuff
+setup_certs: true
+self_signed: true
+private_key_bits: 4096
+private_key_path: "{{ nexus_base_dir }}/nexus/etc/ssl/{{ instance_name }}.key"
+cert_pkcs12_path: "{{ nexus_base_dir }}/nexus/etc/ssl/{{ instance_name }}.pkcs12"
+public_key_path: "{{ nexus_base_dir }}/nexus/etc/ssl/{{ instance_name }}.pub"
+csr_path: "{{ nexus_base_dir }}/nexus/etc/ssl/{{ instance_name }}.csr"
+cert_path: "{{ nexus_base_dir }}/nexus/etc/ssl/{{ instance_name }}.crt"
+cert_common_name: "{{ instance_name }}"
+cert_digest: sha256
+cert_country: US
+cert_state: ny
+cert_locality: manhattan
+cert_organization: "ACME org"
+cert_ou: "Webmasters"
+cert_email: "webmaster@example.com"
+cert_dns_sans:
+  - maven.example.com
+  - nexus.example.com
+cert_ip_sans:
+  - 1.2.3.4
+  - 5.6.7.8
+
+## Java Keystore Stuff
+setup_keystore: true
+generate_keystore: true
+keystore_path: "{{ nexus_base_dir }}/nexus/etc/ssl/keystore.jks"
+keystore_password: changeme
+trust_store_password: changeme
+
+## When importing cert stuff instead of generating them
+cert_import_path_privkey: ""
+cert_import_path_pubkey: ""
+cert_import_path_crt: ""
+keystore_import_path: ""

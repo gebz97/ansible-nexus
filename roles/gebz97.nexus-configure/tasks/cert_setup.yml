@@ -1,6 +1,0 @@
-- name: Generating Self-Signed SSL Certs
-  when:
-    - self_signed | bool
-    - ssl_cert_info is defined
-  ansible.builtin.include_tasks:
-    file: self_signed.yml

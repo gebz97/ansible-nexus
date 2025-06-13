@@ -6,9 +6,15 @@
     - nexus_base_dir is defined
     - nexus_user is defined
   block:
+    - name: Ensure target group for user exists
+      ansible.builtin.group:
+        name: "{{ nexus_user }}"
+        state: present
+  
     - name: Ensure target user exists
       ansible.builtin.user:
         name:  "{{ nexus_user }}"
+        group: "{{ nexus_user }}"
         state: present
         shell: /sbin/nologin
     
