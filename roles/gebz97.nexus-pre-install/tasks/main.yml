@@ -1,0 +1,30 @@
+---
+- name: Copy over the nexus tar
+  when:
+    - offline | bool
+    - offline_package is defined
+    - nexus_base_dir is defined
+    - nexus_user is defined
+  block:
+    - name: Ensure target user exists
+      ansible.builtin.user:
+        name:  "{{ nexus_user }}"
+        state: present
+        shell: /sbin/nologin
+    
+    - name: Ensure target base dir exists
+      ansible.builtin.file:
+        path: "{{ nexus_base_dir }}"
+        state: directory
+        owner: "{{ nexus_user }}"
+        group: "{{ nexus_user }}"
+    
+    - name: Ensure remote archive exists
+      ansible.builtin.unarchive:
+        src: "{{ local_nexus_tar }}"
+        dest: "{{ nexus_base_dir }}/"
+        owner: "{{ nexus_user }}"
+        group: "{{ nexus_user }}"
+        extra_opts:
+          - --transform
+          - s,^nexus-[^/]\+/,nexus/,

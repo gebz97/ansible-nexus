@@ -1,0 +1,14 @@
+---
+## Latest version as of 2025-06-13: 3.81.1-01
+local_nexus_tar: files/nexus-3.81.1-01.tar.gz
+
+## True for offline installation
+offline: true
+
+## Path for the package (offline must be true)
+## offline_package:
+
+## Default base path for installation
+nexus_base_dir: /opt/sonatype
+
+nexus_user: nexus

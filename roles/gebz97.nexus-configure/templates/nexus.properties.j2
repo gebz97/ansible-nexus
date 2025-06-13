@@ -1,0 +1,16 @@
+## DO NOT EDIT - CUSTOMIZATIONS BELONG IN $data-dir/etc/nexus.properties
+##
+# Jetty section
+application-port={{ application_port }}
+application-host=0.0.0.0
+nexus-args=${jetty.etc}/jetty.xml,${jetty.etc}/jetty-http.xml,${jetty.etc}/jetty-requestlog.xml,${jetty.etc}/jetty-https.xml
+nexus-context-path=/
+
+# Nexus section
+nexus-edition=nexus-pro-edition
+nexus-features=\
+ nexus-pro-feature
+
+application-port-ssl={{ application_port_ssl }}
+ssl.etc={{ nexus_base_dir }}/etc/ssl
+nexus.hazelcast.discovery.isEnabled=true

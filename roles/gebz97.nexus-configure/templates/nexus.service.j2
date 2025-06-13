@@ -1,0 +1,16 @@
+[Unit]
+Description=Sonatype Nexus Repository
+After=network.target
+
+[Service]
+Type=forking
+LimitNPROC=65536
+LimitNOFILE=65536
+ExecStart={{ nexus_base_dir }}/nexus/bin/nexus start
+ExecStop={{ nexus_base_dir }}/nexus/bin/nexus stop
+User=nexus
+Group=nexus
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

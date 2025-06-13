@@ -1,0 +1,33 @@
+- name: Generate Private Key
+  community.crypto.openssl_privatekey:
+    path: "{{ private_key_path }}"
+    size: "{{ private_key_bits }}"
+    owner: "{{ nexus_user }}"
+    group: "{{ nexus_user }}"
+    mode: 0600
+
+- name: Generate an OpenSSL public key in PEM format
+  community.crypto.openssl_publickey:
+    path: "{{ public_key_path }}"
+    privatekey_path: "{{ private_key_path }}"
+    owner: "{{ nexus_user }}"
+    group: "{{ nexus_user }}"
+
+- name: Generate the CSR
+  community.crypto.openssl_csr:
+    path: "{{ csr_path }}"
+    privatekey_path: "{{ private_key_path }}"
+    use_common_name_for_san: false
+    common_name: "{{ cert_common_name }}"
+    digest: "{{ cert_digest }}"
+    country_name: "{{ cert_country }}"
+    state_or_province_name: "{{ cert_state }}"
+    locality_name: "{{ cert_locality }}"
+    organization_name: "{{ cert_organization }}"
+    organization_unit_name: "{{ cert_ou }}"
+    email_address: "{{ cert_email }}"
+    subject_alt_name: "{{ combined_san }}"
+    owner: "{{ nexus_user }}"
+    group: "{{ nexus_user }}"
+
+- name: 
